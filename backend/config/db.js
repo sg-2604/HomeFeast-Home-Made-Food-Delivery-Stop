@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-export const connectDB = async() => {
-    await mongoose.connect('mongodb+srv://sankalpgupta2604:o7pDqpqrXDCZETsB@cluster0.ow4oyn5.mongodb.net/HomeFeast').then(()=>console.log("DB Connected"));
-}
+dotenv.config(); // Load variables from .env
+
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("DB Connected");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1); // Exit the app if DB connection fails
+  }
+};
